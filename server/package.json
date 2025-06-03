@@ -1,0 +1,41 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "backend for budget-pilot",
+    "main": "server.js",
+    "scripts": {
+        "dev": "nodemon",
+        "start": "node server.js"
+    },
+    "keywords": [
+        "nodejs",
+        "express",
+        "api",
+        "mvc",
+        "backend"
+    ],
+    "author": "Praneeth Katuri",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/praneeth-katuri/budget-pilot"
+    },
+    "bugs": {
+        "url": "https://github.com/praneeth-katuri/budget-pilot/issues"
+    },
+    "homepage": "https://github.com/praneeth-katuri/budget-pilot",
+    "engines": {
+        "node": ">=22.15.0"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.5.0",
+        "express": "^5.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.15.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.10"
+    }
+}
