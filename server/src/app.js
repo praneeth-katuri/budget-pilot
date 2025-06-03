@@ -4,6 +4,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const authRoutes = require("./routes/authRoutes");
 const sourceRoutes = require("./routes/sourceRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/sources", sourceRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/user/", userRoutes);
 
 // global error Handler
 app.use(errorHandler);
