@@ -1,6 +1,7 @@
 const {
   generateAccessToken,
   generateRefreshToken,
+  verifyToken,
 } = require("../utils/generateToken");
 const User = require("../models/User");
 const config = require("../config");
@@ -48,9 +49,9 @@ const refresh = async (refreshToken) => {
     throw error;
   }
 
-  const decoded = jwt.verify(refreshToken, config.jwt.refreshSecret);
+  const decoded = verifyToken(refreshToken, config.jwt.refreshSecret);
 
-  const user = await User.findById({ id: decoded.id });
+  const user = await User.findById(decoded.id);
 
   if (!user) {
     const error = new Error("Invalid Token");
