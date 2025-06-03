@@ -9,8 +9,10 @@ const config = {
     dbUri: process.env.DB_URI,
   },
   jwt: {
-    secret: process.env.JWT_SECRET,
-    expiresIn: process.env.JWT_EXPIRES_IN || "1h",
+    accessSecret: process.env.ACCESS_TOKEN_SECRET,
+    refreshSecret: process.env.REFRESH_TOKEN_SECRET,
+    accessExpiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || "15m",
+    refreshExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || "7d",
   },
 };
 
