@@ -1,5 +1,4 @@
 const Source = require("../models/Source");
-const sourceService = require("../services/sourceService");
 
 const addSource = async (req, res, next) => {
   try {
@@ -26,10 +25,11 @@ const getSources = async (req, res, next) => {
 const depositToSource = async (req, res, next) => {
   try {
     const { amount, note } = req.body;
-    const source = await Source.find({
-      _id: req.params._id,
+    const source = await Source.findOne({
+      _id: req.params.id,
       userId: req.userId,
     });
+    console.log(req.params);
     if (!source) {
       res.status(400).json({ message: "Source not found" });
     }
@@ -55,8 +55,8 @@ const transferFunds = async (req, res, next) => {
     }
 
     const [from, to] = await Promise.all([
-      Source.find({ _id: fromId, userId: req.user._id }),
-      Source.find({ _id: toId, userId: req.user._id }),
+      Source.findOne({ _id: fromId, userId: req.userId }),
+      Source.findOne({ _id: toId, userId: req.userId }),
     ]);
 
     if (!from || !to) {

@@ -13,4 +13,8 @@ const generateRefreshToken = (userId) => {
   });
 };
 
-module.exports = { generateAccessToken, generateRefreshToken };
+const verifyToken = (token, tokenSecret) => {
+  return jwt.verify(token, tokenSecret);
+};
+
+module.exports = { generateAccessToken, generateRefreshToken, verifyToken };

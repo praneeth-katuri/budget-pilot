@@ -5,7 +5,7 @@ const addExpense = async (req, res, next) => {
   try {
     const { amount, sourceId, category, note, date } = req.body;
 
-    const source = await Source.findOne({ _id: sourceId, userId: req.UserId });
+    const source = await Source.findOne({ _id: sourceId, userId: req.userId });
 
     if (!source) {
       const error = new Error("Source not found");
@@ -49,11 +49,11 @@ const getExpenses = async (req, res, next) => {
       start = new Date(now.getFullYear(), now.getMonth(), 1);
     }
 
-    end = new Date(start.getFullYear(), start.getMonth(), 1);
+    end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
 
     const expenses = await Expense.find({
       userId: req.userId,
-      date: { $gte: start, $le: end },
+      date: { $gte: start, $lt: end },
     }).sort({ date: -1 });
 
     res.status(200).json(expenses);

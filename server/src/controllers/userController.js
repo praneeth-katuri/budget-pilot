@@ -8,7 +8,7 @@ const updateBudget = async (req, res, next) => {
       error.status = 400;
       throw error;
     }
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.userId);
     user.monthlyBudget = amount;
     await user.save();
 
