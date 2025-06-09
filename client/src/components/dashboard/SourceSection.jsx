@@ -1,28 +1,36 @@
-import { useEffect, useState } from "react";
-import api from "@/services/api";
+import { useSourceStore } from "@/context/sourceStore";
 import SourceCard from "./SourceCard";
+import { useSources } from "@/hooks/useSources";
+import { useState } from "react";
+import { Button } from "../ui/button";
 
 export default function SourceSection() {
-  const [sources, setSources] = useState([]);
+  useSources(); // fetches and sets the sources DO NOT play with this
+  const sources = useSourceStore((s) => s.sources);
+  const updateSource = useSourceStore.getState().updateSource;
 
-  const fetchSources = async () => {
-    const res = await api.get("/sources");
-    setSources(res.data);
-  };
+  const [viewAll, setViewAll] = useState(false);
+  const toggleViewAll = () => setViewAll((s) => !s);
 
-  useEffect(() => {
-    fetchSources();
-  }, []);
+  const hiddenSources = sources.length > 3;
+  const sourcesToView = !viewAll ? sources.slice(0, 3) : sources;
 
   return (
     <div className="mb-6">
-      <h2 className="text-lg font-bold mb-4">Sources</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-bold uppercase">Sources</h2>
+        {hiddenSources && (
+          <Button onClick={toggleViewAll} className="cursor-pointer">
+            {viewAll ? "View Less" : "View more"}
+          </Button>
+        )}
+      </div>
       <div className="grid md:grid-cols-3 gap-4">
-        {sources.map((source) => (
+        {sourcesToView.map((source) => (
           <SourceCard
             key={source._id}
             source={source}
-            onRefresh={fetchSources}
+            updateSource={updateSource}
           />
         ))}
       </div>
