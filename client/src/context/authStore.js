@@ -2,7 +2,7 @@ import { create } from "zustand";
 import api from "@/services/api/api";
 import { setupInterceptors } from "@/services/api/apiInterceptor";
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set, get) => ({
   user: null,
   accessToken: null,
   isAuthenticated: false,
@@ -66,22 +66,7 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+
+  initializeInterceptors: () =>
+    setupInterceptors(get().setAccessToken, get().logout),
 }));
-
-let interceptorsAttached = false;
-
-if (typeof window !== "undefined") {
-  const store = useAuthStore.getState();
-  const hasSession = localStorage.getItem("hasSession") === "true";
-
-  if (hasSession) {
-    store.refresh();
-  } else {
-    store.setIsLoading(false);
-  }
-
-  if (!interceptorsAttached) {
-    setupInterceptors(store.setAccessToken, store.logout);
-    interceptorsAttached = true;
-  }
-}
