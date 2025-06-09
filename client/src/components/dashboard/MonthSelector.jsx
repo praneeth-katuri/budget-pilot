@@ -1,16 +1,11 @@
-import { useExpenseStore } from "@/context/expenseStore";
+import MonthSelectors from "../ui/MonthSelector";
+import { BudgetButton } from "./BudgetButton";
 
 export default function MonthSelector() {
-  const { selectedMonth, setSelectedMonth } = useExpenseStore();
-
   return (
-    <div className="mb-4">
-      <input
-        type="month"
-        value={selectedMonth}
-        onChange={(e) => setSelectedMonth(e.target.value)}
-        className="border px-3 py-2 rounded"
-      />
+    <div className="mb-4 flex justify-between">
+      <MonthSelectors />
+      <BudgetButton />
     </div>
   );
 }
