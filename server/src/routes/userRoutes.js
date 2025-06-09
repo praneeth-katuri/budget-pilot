@@ -5,6 +5,6 @@ const updateBudget = require("../controllers/userController");
 
 router.use(protect);
 
-router.put("/budget", updateBudget);
+router.patch("/budget", updateBudget);
 
 module.exports = router;
