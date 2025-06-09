@@ -2,18 +2,16 @@ import { Pie } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useExpenseStore } from "@/context/expenseStore";
-import api from "@/services/api";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function PieByCategory() {
-  const { selectedMonth } = useExpenseStore();
+  const expenses = useExpenseStore((s) => s.expenses);
   const [data, setData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await api.get(`/expenses?month=${selectedMonth}`);
-      const grouped = res.data.reduce((acc, curr) => {
+      const grouped = expenses.reduce((acc, curr) => {
         acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
         return acc;
       }, {});
@@ -39,9 +37,22 @@ export default function PieByCategory() {
     };
 
     fetchData();
-  }, [selectedMonth]);
+  }, [expenses]);
 
   if (!data.labels?.length) return <p>No data for this month.</p>;
 
-  return <Pie data={data} />;
+  return (
+    <div className="h-[300px] flex justify-center m-4">
+      <Pie
+        data={data}
+        options={{
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        }}
+      />
+    </div>
+  );
 }
