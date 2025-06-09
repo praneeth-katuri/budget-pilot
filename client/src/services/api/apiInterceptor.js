@@ -34,7 +34,7 @@ export const setupInterceptors = (setAccessToken, logout) => {
         isRefreshing = true;
 
         try {
-          const { data } = await api.post("/auth/refresh-token");
+          const { data } = await api.get("/auth/refresh");
           setAccessToken(data.accessToken);
           api.defaults.headers.Authorization = `Bearer ${data.accessToken}`;
           originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
