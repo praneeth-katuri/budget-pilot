@@ -1,17 +1,20 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import api from "@/services/api";
+import api from "@/services/api/api";
 import toast from "react-hot-toast";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const schema = z.object({
   name: z.string().min(2, "Source name is too short"),
+  balance: z.string().optional(),
 });
 
 export default function AddSource() {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -35,18 +38,44 @@ export default function AddSource() {
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-md mx-auto p-4 space-y-4 bg-white dark:bg-gray-800 rounded shadow"
       >
-        <h2 className="text-xl font-bold">Add Source</h2>
-        <input
-          {...register("name")}
-          placeholder="Source name"
-          className="input w-full"
+        <h2 className="text-xl font-bold text-center">Add Source</h2>
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              placeholder="Source name"
+              value={field.value ?? ""}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
         />
+
         {errors.name && (
           <p className="text-red-500 text-sm">{errors.name.message}</p>
         )}
-        <button type="submit" className="btn bg-blue-600 text-white w-full">
+
+        <Controller
+          name="balance"
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="Intial Balance (optional)"
+              value={field.value ?? ""}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
+        />
+        <Button
+          type="submit"
+          className="btn bg-blue-500 hover:bg-blue-600 text-white w-full"
+        >
           Add Source
-        </button>
+        </Button>
       </form>
     </DashboardLayout>
   );
