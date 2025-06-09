@@ -1,10 +1,19 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import api from "@/services/api";
+import api from "@/services/api/api";
 import toast from "react-hot-toast";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const schema = z.object({
   fromId: z.string().min(1),
@@ -14,11 +23,10 @@ const schema = z.object({
 
 export default function Transfers() {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -51,37 +59,74 @@ export default function Transfers() {
       >
         <h2 className="text-xl font-bold">Transfer Funds</h2>
 
-        <select {...register("fromId")} className="input w-full">
-          <option value="">From Source</option>
-          {sources.map((s) => (
-            <option key={s._id} value={s._id}>
-              {s.name}
-            </option>
-          ))}
-        </select>
-
-        <select {...register("toId")} className="input w-full">
-          <option value="">To Source</option>
-          {sources.map((s) => (
-            <option key={s._id} value={s._id}>
-              {s.name}
-            </option>
-          ))}
-        </select>
-
-        <input
-          {...register("amount", { valueAsNumber: true })}
-          type="number"
-          placeholder="Amount"
-          className="input w-full"
+        <Controller
+          name="fromId"
+          control={control}
+          render={({ field }) => (
+            <Select value={field.value ?? ""} onValueChange={field.onChange}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select source account" />
+              </SelectTrigger>
+              <SelectContent className="max-h-44">
+                {sources.map((source) => (
+                  <SelectItem key={source._id} value={source._id}>
+                    {source.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         />
+        {errors.fromId && (
+          <p className="text-red-500 text-sm">{errors.fromId.message}</p>
+        )}
+
+        <Controller
+          name="toId"
+          control={control}
+          render={({ field }) => (
+            <Select value={field.value ?? ""} onValueChange={field.onChange}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent className="max-h-72">
+                {sources.map((source) => (
+                  <SelectItem key={source._id} value={source._id}>
+                    {source.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        />
+        {errors.toId && (
+          <p className="text-red-500 text-sm">{errors.toId.message}</p>
+        )}
+        <Controller
+          name="amount"
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="Enter amount"
+              value={field.value ?? ""}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
+        />
+
         {errors.amount && (
           <p className="text-red-500 text-sm">{errors.amount.message}</p>
         )}
 
-        <button type="submit" className="btn bg-blue-600 text-white w-full">
+        <Button
+          type="submit"
+          className="btn bg-blue-500 hover:bg-blue-600 text-white w-full"
+        >
           Transfer
-        </button>
+        </Button>
       </form>
     </DashboardLayout>
   );
