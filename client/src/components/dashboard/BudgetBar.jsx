@@ -1,28 +1,7 @@
-import { useExpenseStore } from "@/context/expenseStore";
-import { useEffect, useState } from "react";
-import api from "@/services/api";
+import { useBudgetExpenses } from "@/hooks/useBudgetExpenses";
 
 export default function BudgetBar() {
-  const { selectedMonth } = useExpenseStore();
-  const [budget, setBudget] = useState(0);
-  const [totalSpent, setTotalSpent] = useState(0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const [expensesRes, userRes] = await Promise.all([
-        api.get(`/expenses?month=${selectedMonth}`),
-        api.get("/auth/me"), // or /users/me depending on your route
-      ]);
-
-      const total = expensesRes.data.reduce((acc, exp) => acc + exp.amount, 0);
-      setTotalSpent(total);
-      setBudget(userRes.data.monthlyBudget);
-    };
-
-    fetchData();
-  }, [selectedMonth]);
-
-  const percent = Math.min((totalSpent / budget) * 100, 100);
+  const { budget, totalSpent, percent } = useBudgetExpenses();
 
   return (
     <div className="mb-6">
