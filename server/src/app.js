@@ -6,12 +6,18 @@ const authRoutes = require("./routes/authRoutes");
 const sourceRoutes = require("./routes/sourceRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
 const userRoutes = require("./routes/userRoutes");
+const config = require("./config");
 
 const app = express();
 
 //Middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: config.app.frontendUrl,
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 // Routes here
