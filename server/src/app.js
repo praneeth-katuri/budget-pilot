@@ -26,6 +26,11 @@ app.use("/api/sources", sourceRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/user", userRoutes);
 
+// route to prevent render from shutting down
+app.get("/api/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
 // global error Handler
 app.use(errorHandler);
 
