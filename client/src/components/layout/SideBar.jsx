@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/utils/cn";
 import { X } from "lucide-react";
+import Logo from "@/assets/Logo.png";
 
 const navItems = [
   { name: "Dashboard", path: "/dashboard" },
@@ -16,8 +17,9 @@ export default function Sidebar({ onClose }) {
     <aside className="bg-gray-900 text-white w-full md:w-64 h-screen p-4 fixed left-0 top-0">
       {/* Only show close button if onClose prop exists (mobile mode) */}
 
-      <div className="flex justify-between items-center text-xl font-bold mb-6">
-        <p>Budget Pilot</p>
+      <div className="flex justify-between md:justify-start md:gap-2 items-center text-xl font-bold mb-6">
+        <img src={Logo} alt="Logo" className="w-8 h-8 rounded-full block" />
+        <span className="text-2xl">Budget Pilot</span>
         {onClose && (
           <button
             onClick={onClose}
