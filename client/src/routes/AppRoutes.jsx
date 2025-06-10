@@ -1,16 +1,17 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
-import Login from "@/pages/Auth/Login";
-import Register from "@/pages/Auth/Register";
 import DashboardPage from "@/pages/DashBoardPage";
 import AddSource from "@/pages/AddSource";
 import AddExpense from "@/pages/AddExpense";
 import Transfers from "@/pages/TransferFunds";
 import { Route, Navigate, Routes } from "react-router-dom";
+import AuthLayout from "@/components/layout/AuthLayout";
 
 const AppRoutes = () => (
   <Routes>
-    <Route path="/login" element={<Login />} />
-    <Route path="/register" element={<Register />} />
+    <Route path="/" element={<AuthLayout />}>
+      <Route path="login" element={<div />} />
+      <Route path="signup" element={<div />} />
+    </Route>
 
     <Route
       path="/dashboard"
