@@ -2,9 +2,10 @@ const Source = require("../models/Source");
 
 const addSource = async (req, res, next) => {
   try {
-    const { name } = req.body;
+    const { name, balance } = req.body;
     const source = await Source.create({
       name,
+      balance,
       userId: req.userId,
     });
     res.status(201).json(source);
