@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import api from "@/services/api/api";
 import toast from "react-hot-toast";
-import DashboardLayout from "@/components/layout/DashboardLayout";
+import DashboardLayout from "@/components/layout/DashBoardLayout";
 import {
   Select,
   SelectContent,
