@@ -27,6 +27,15 @@ export const useAuthStore = create((set, get) => ({
     });
   },
 
+  signup: async (name, email, password, confirmPassword) => {
+    await api.post("/auth/register", {
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+  },
+
   logout: async () => {
     try {
       await api.post("/auth/logout", {});
