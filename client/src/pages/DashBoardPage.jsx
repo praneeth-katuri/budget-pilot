@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/layout/DashboardLayout";
+import DashboardLayout from "@/components/layout/DashBoardLayout";
 import MonthSelector from "@/components/dashboard/MonthSelector";
 import BudgetBar from "@/components/dashboard/BudgetBar";
 import ChartsSection from "@/components/dashboard/ChartsSection";
