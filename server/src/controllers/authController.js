@@ -42,6 +42,8 @@ const logout = async (req, res, next) => {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: config.app.env === "production",
+      path: "/",
+      sameSite: "Lax",
     });
 
     res.status(200).json({ message: "Logged out successfully" });
