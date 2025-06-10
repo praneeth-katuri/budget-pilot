@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Sidebar from "./Sidebar";
-import Topbar from "./Topbar";
+import Sidebar from "./SideBar";
+import Topbar from "./TopBar";
 import { X } from "lucide-react";
 
 export default function DashboardLayout({ children }) {
