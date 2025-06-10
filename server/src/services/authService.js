@@ -29,7 +29,7 @@ const login = async ({ email, password }) => {
   return { user, accessToken, refreshToken };
 };
 
-const register = async ({ username, email, password }) => {
+const register = async ({ name, email, password, confirmPassword }) => {
   const userExists = await User.findOne({ email: email });
 
   if (userExists) {
@@ -38,7 +38,7 @@ const register = async ({ username, email, password }) => {
     throw error;
   }
 
-  const user = await User.create({ username, email, password });
+  const user = await User.create({ name, email, password });
   return user;
 };
 
