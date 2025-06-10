@@ -23,15 +23,28 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Hash password before saving
+// Auto-strip sensitive fields when serializing to JSON
+userSchema.set("toJSON", {
+  transform: function (doc, ret) {
+    delete ret.password;
+    delete ret.__v;
+    return ret;
+  },
+});
+
+// 🔐 Hash password before saving
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-// Compare password method
-userSchema.methods.comparePassword = function (candidate) {
+userSchema.methods.comparePassword = async function (candidate) {
+  if (!this.password) {
+    throw new Error(
+      "Password not selected. Use .select('+password') in query."
+    );
+  }
   return bcrypt.compare(candidate, this.password);
 };
 
