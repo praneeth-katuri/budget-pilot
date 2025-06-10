@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/services/api/api";
 import toast from "react-hot-toast";
-import DashboardLayout from "@/components/layout/DashboardLayout";
+import DashboardLayout from "@/components/layout/DashBoardLayout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
