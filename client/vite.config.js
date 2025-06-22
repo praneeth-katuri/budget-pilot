@@ -9,4 +9,13 @@ export default defineConfig({
       "@": new URL("./src", import.meta.url).pathname,
     },
   },
+  server: {
+    port: 5174,
+    proxy: {
+      "/api": {
+        target: "http://localhost:5050",
+        changeOrigin: true,
+      },
+    },
+  },
 });
