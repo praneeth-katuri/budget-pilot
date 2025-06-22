@@ -3,8 +3,12 @@
     "ignoreCommand": "git diff --quiet HEAD^ HEAD -- client/src/ client/public/ client/index.html client/package.json client/vite.config.js vercel.json",
     "rewrites": [
         {
-            "source": "/api/:path*",
-            "destination": "https://budget-pilot-backend.onrender.com/api/:path*"
+            "source": "/api/(.*)",
+            "destination": "https://budget-pilot-backend.onrender.com/api/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
