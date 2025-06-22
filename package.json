@@ -4,6 +4,9 @@
         "client",
         "server"
     ],
+    "engines": {
+        "node": ">=22.15.0 <=23.0.0"
+    },
     "scripts": {
         "dev": "concurrently \"npm:dev-client\" \"npm:dev-server\"",
         "dev-client": "npm run dev --workspace client",
