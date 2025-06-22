@@ -1,6 +1,6 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
-    "ignoreCommand": "git diff --quiet HEAD^ HEAD -- client/src/ client/public/ client/index.html client/package.json client/vite.config.js client/vercel.json",
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD -- src/ public/ index.html package.json vite.config.js vercel.json",
     "rewrites": [
         {
             "source": "/api/:path*",
