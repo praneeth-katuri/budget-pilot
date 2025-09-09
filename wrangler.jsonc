@@ -1,5 +1,5 @@
 {
-  "name": "plan-your-diet",
+  "name": "budget-pilot",
   "workers_dev": false,
   "compatibility_date": "2025-09-08",
   "main": "worker/index.js",
